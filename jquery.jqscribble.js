@@ -135,11 +135,26 @@ function BasicCanvasSave(imageData){window.open(imageData,'jqScribble Image');}
         if(width < 2)width = settings.width;
         if(height < 2)height = settings.height;
 
-        self.blank = true;
+        self._blank = true;
         self.canvas = canvas;
         self.canvas.width = width;
         self.canvas.height = height;
         self.clear();
+		
+		var _oldBlank = self._blank;
+		jQuery(elm).trigger('blankChanged', self._blank);
+		Object.defineProperty(self, "blank", {
+			get: function myProperty() {
+				return self._blank;
+			},
+			set: function myProperty(value) {				
+				self._blank = value;
+				if(_oldBlank != self._blank) jQuery(elm).trigger('blankChanged', self._blank);
+				_oldBlank = self._blank;				
+			}
+		});
+		
+		$.extend(settings, self);
 
         if(settings.backgroundImage)
         {
@@ -243,7 +258,14 @@ function BasicCanvasSave(imageData){window.open(imageData,'jqScribble Image');}
                 this.blank = false;
             }
             return this;
+        },
+
+        isBlank: function()
+        {
+            return this.blank;
         }
+
+        
     };
 
     $.fn.jqScribble = function(options)

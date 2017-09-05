@@ -87,7 +87,10 @@
 		}
 		$(document).ready(function()
 		{
-			$("#test").jqScribble();
+			$("#test").jqScribble();			
+		});
+		$("#test").bind( "blankChanged", function( x, blank ) {
+		  console.log(blank);
 		});
 		</script>
 	</body>
