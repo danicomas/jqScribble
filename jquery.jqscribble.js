@@ -258,14 +258,7 @@ function BasicCanvasSave(imageData){window.open(imageData,'jqScribble Image');}
                 this.blank = false;
             }
             return this;
-        },
-
-        isBlank: function()
-        {
-            return this.blank;
         }
-
-        
     };
 
     $.fn.jqScribble = function(options)
